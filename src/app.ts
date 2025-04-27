@@ -3,11 +3,19 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 
+const allowedOrigins = [ 'http://localhost:3001', 'https://auth-app-frontend-ehx6.vercel.app/' ]; // your frontend origin
+
 const app = express();
 
 
 import authRouter from './routes/authRouter';
-app.use( cors() );
+// app.use( cors() );
+app.use(
+    cors( {
+        origin: allowedOrigins,
+        credentials: true,
+    } )
+);
 app.use( express.json() );
 
 app.use( '/api/v1/users', authRouter );
